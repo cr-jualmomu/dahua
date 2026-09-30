@@ -2352,6 +2352,34 @@ class DahuaClient:
         _LOGGER.debug("Setting raw Lighting_V2: %s", url)
         return await self.get(url)
 
+    async def async_set_lighting_v2_field(
+        self,
+        channel: int,
+        profile_mode: str,
+        light_index: int,
+        field: str,
+        value,
+    ) -> dict:
+        """Write one leaf of a Lighting_V2 entry, leaving the rest of the row alone.
+
+        setConfig merges, so naming a single field does not disturb Mode or the
+        brightness banks. The index shape is the same one
+        `async_set_lighting_v2_raw` uses, so a caller that read a value out of the
+        polled table can write it back to the key it came from.
+
+        The caller chooses the field, because which leaves a given model carries
+        varies: a DHI-NVR5464 reports Mode, LightType, Correction, Sensitive,
+        PercentOfMaxBrightness, the three light banks and two AI mix light fields,
+        and nothing else.
+        """
+        url = (
+            "/cgi-bin/configManager.cgi?action=setConfig"
+            f"&Lighting_V2[{channel}][{profile_mode}]"
+            f"[{light_index}].{field}={value}"
+        )
+        _LOGGER.debug("Setting Lighting_V2 field: %s", url)
+        return await self.get(url)
+
     # async def async_set_lighting_v2_for_flood_lights(self, channel: int, enabled: bool, brightness: int, profile_mode: str) -> dict:
     async def async_set_lighting_v2_for_flood_lights(self, channel: int, enabled: bool, profile_mode: str) -> dict:
         """

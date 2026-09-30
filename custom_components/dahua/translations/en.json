@@ -315,6 +315,11 @@
                 "name": "Warning Light"
             }
         },
+        "number": {
+            "deterrence_light_duration": {
+                "name": "Deterrence Light Duration"
+            }
+        },
         "select": {
             "security_light": {
                 "name": "Security Light"
