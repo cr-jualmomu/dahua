@@ -28,8 +28,8 @@ from pathlib import Path
 
 PACKAGE = Path(__file__).resolve().parents[2] / "custom_components" / "dahua"
 
-PLATFORMS = ("binary_sensor", "button", "camera", "event", "light", "select",
-             "sensor", "switch")
+PLATFORMS = ("binary_sensor", "button", "camera", "event", "light", "number",
+             "select", "sensor", "switch")
 
 # What each entity's `name` property returned before it was translated. The whole
 # point of the change was that Home Assistant composes "<device> <entity>" either
